@@ -90,6 +90,7 @@ public class TestHelper {
         if(isLoggedIn()) logout();
         driver.get(baseUrlAdmin);
         driver.findElement(By.linkText("Register")).click();
+        waitFor(ExpectedConditions.presenceOfElementLocated(By.id("user_name")));
         driver.findElement(By.id("user_name")).sendKeys(username);
         driver.findElement(By.id("user_password")).sendKeys(password);
         driver.findElement(By.id("user_password_confirmation")).sendKeys(password);
