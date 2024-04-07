@@ -40,4 +40,8 @@ public class AdminTest extends TestHelper {
         Assert.assertEquals(false, isLoggedIn());
     }
 
+    @Test
+    public void loggedInWithoutLoggingIn() {
+        Assert.assertFalse(isLoggedIn());
+    }
 }
