@@ -134,6 +134,10 @@ public class TestHelper {
         driver.findElement(By.name("commit")).click();
     }
 
+    void addProductToCart(String product) {
+        driver.findElement(By.id(product + "_entry")).findElement(By.className("button_to")).click();
+    }
+
     void waitFor(ExpectedCondition<WebElement> expectedConditions) {
         new WebDriverWait(driver, waitForResposeTime).ignoring(StaleElementReferenceException.class)
                 .until(expectedConditions);
