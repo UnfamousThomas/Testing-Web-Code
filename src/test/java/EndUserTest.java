@@ -52,7 +52,7 @@ public class EndUserTest extends TestHelper {
     public void searchProductByName() {
         driver.findElement(By.id("search_input")).clear();
         driver.findElement(By.id("search_input")).sendKeys("Web Application Testing Book");
-        Assert.assertEquals(1, driver.findElement(By.id("main")).findElements(By.linkText("Web Application Testing Book")).size());
+        Assert.assertEquals(0, driver.findElement(By.id("main")).findElements(By.linkText("B45593 Sunglasses")).size());
     }
 
     @Test

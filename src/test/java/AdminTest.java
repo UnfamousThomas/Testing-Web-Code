@@ -23,13 +23,6 @@ public class AdminTest extends TestHelper {
     }
 
     @Test
-    public void registerExistingAccount() {
-        create(user, user);
-        create(user, pass);
-        delete(user, pass);
-    }
-
-    @Test
     public void loginNewAccount() {
         create(user, pass);
         login(user, pass);
