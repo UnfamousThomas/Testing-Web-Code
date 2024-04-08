@@ -121,7 +121,7 @@ public class TestHelper {
         Assert.assertEquals("User was successfully deleted.", notice.getText().trim());
     }
 
-    void addNewProduct(String user, String  pass, String productName, String price) {
+    void addNewProduct(String user, String  pass, String productName, String price, String type) {
         create(user, pass);
         login(user, pass);
         driver.findElement(By.linkText("Products")).click();
@@ -129,13 +129,24 @@ public class TestHelper {
         waitForElementById("product_title");
         driver.findElement(By.id("product_title")).sendKeys(productName);
         driver.findElement(By.id("product_description")).sendKeys("This is a test product");
-        new Select(driver.findElement(By.id("product_prod_type"))).selectByValue("Books");
+        new Select(driver.findElement(By.id("product_prod_type"))).selectByValue(type);
         driver.findElement(By.id("product_price")).sendKeys(price);
         driver.findElement(By.name("commit")).click();
     }
 
     void addProductToCart(String product) {
         driver.findElement(By.id(product + "_entry")).findElement(By.className("button_to")).click();
+    }
+
+    void adminEditProduct(String user, String pass, String type) {
+        addNewProduct(user, pass, "New Test Product", "10", type);
+        Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
+        driver.findElement(By.id("New Test Product")).findElement(By.linkText("Edit")).click();
+        waitForElementById("product_title");
+        driver.findElement(By.id("product_title")).clear();
+        driver.findElement(By.id("product_title")).sendKeys("Edited Test Product");
+        driver.findElement(By.name("commit")).click();
+        Assert.assertEquals("Title: Edited Test Product", driver.findElement(By.id("main")).findElement(By.className("products_column")).findElements(By.cssSelector("p")).get(1).getText().trim());
     }
 
     void waitFor(ExpectedCondition<WebElement> expectedConditions) {
