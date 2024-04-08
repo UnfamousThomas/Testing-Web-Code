@@ -56,6 +56,20 @@ public class EndUserTest extends TestHelper {
     }
 
     @Test
+    public void showOnlySunglasses() {
+        driver.findElement(By.linkText("Sunglasses")).click();
+        waitForElementById("Sunglasses");
+        Assert.assertEquals(0, driver.findElement(By.id("main")).findElements(By.linkText("Web Application Testing Book")).size());
+    }
+
+    @Test
+    public void showOnlyBooks() {
+        driver.findElement(By.linkText("Books")).click();
+        waitForElementById("Books");
+        Assert.assertEquals(0, driver.findElement(By.id("main")).findElements(By.partialLinkText("Sunglasses")).size());
+    }
+
+    @Test
     public void purchase() {
         addProductToCart("Web Application Testing Book");
         driver.findElement(By.id("cart")).findElements(By.cssSelector("form")).get(1).findElement(By.cssSelector("input[type=submit]")).click();
