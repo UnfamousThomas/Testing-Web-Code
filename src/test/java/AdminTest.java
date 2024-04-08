@@ -76,10 +76,11 @@ public class AdminTest extends TestHelper {
     @Test
     public void editSunglassesAndCheckCategory() {
         adminEditProduct(user, pass, "Sunglasses");
-        Assert.assertEquals("Type: Sunglasses", driver.findElement(By.id("main")).findElement(By.className("products_column")).findElements(By.cssSelector("p")).get(3).getText().trim());
+        String type = driver.findElement(By.id("main")).findElement(By.className("products_column")).findElements(By.cssSelector("p")).get(3).getText().trim();
         driver.findElement(By.linkText("Products")).click();
         driver.findElement(By.id("Edited Test Product")).findElement(By.linkText("Delete")).click();
         delete(user, pass);
+        Assert.assertEquals("Type: Sunglasses", type);
     }
 
     @Test
