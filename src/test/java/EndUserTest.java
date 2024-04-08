@@ -85,7 +85,7 @@ public class EndUserTest extends TestHelper {
 
     @Test
     public void searchForNotExisting() {
-        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0");
+        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0", "Books");
         driver.get(baseUrl);
         driver.findElement(By.id("search_input")).clear();
         driver.findElement(By.id("search_input")).sendKeys("Weird thing that should not exist at all");
@@ -96,7 +96,7 @@ public class EndUserTest extends TestHelper {
 
     @Test
     public void searchForExisting() {
-        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0");
+        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0", "Books");
         driver.get(baseUrl);
         driver.findElement(By.id("search_input")).clear();
         driver.findElement(By.id("search_input")).sendKeys("Weird thing that should not exist");
