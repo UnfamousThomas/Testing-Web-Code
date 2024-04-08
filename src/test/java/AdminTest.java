@@ -23,6 +23,13 @@ public class AdminTest extends TestHelper {
     }
 
     @Test
+    public void registerExistingAccount() {
+        create(user, user);
+        create(user, pass);
+        delete(user, pass);
+    }
+
+    @Test
     public void loginNewAccount() {
         create(user, pass);
         login(user, pass);
@@ -52,15 +59,22 @@ public class AdminTest extends TestHelper {
 
     @Test
     public void addProduct() {
-        addNewProduct(user, pass, "New Test Product");
+        addNewProduct(user, pass, "New Test Product", "10");
         Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
         driver.findElement(By.id("New Test Product")).findElement(By.linkText("Delete")).click();
         delete(user, pass);
     }
 
     @Test
+    public void addProductWithNegativePrice() {
+        addNewProduct(user, pass, "New Test Product", "-1");
+        Assert.assertFalse(isElementPresent(By.linkText("New Test Product")));
+        delete(user, pass);
+    }
+
+    @Test
     public void editProduct() {
-        addNewProduct(user, pass, "New Test Product");
+        addNewProduct(user, pass, "New Test Product", "10");
         Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
         driver.findElement(By.id("New Test Product")).findElement(By.linkText("Edit")).click();
         waitForElementById("product_title");
@@ -75,7 +89,7 @@ public class AdminTest extends TestHelper {
 
     @Test
     public void deleteProduct() {
-        addNewProduct(user, pass, "New Test Product");
+        addNewProduct(user, pass, "New Test Product", "10");
         Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
         driver.findElement(By.id("New Test Product")).findElement(By.linkText("Delete")).click();
         delete(user, pass);

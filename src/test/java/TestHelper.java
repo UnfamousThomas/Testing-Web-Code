@@ -121,7 +121,7 @@ public class TestHelper {
         Assert.assertEquals("User was successfully deleted.", notice.getText().trim());
     }
 
-    void addNewProduct(String user, String  pass, String productName) {
+    void addNewProduct(String user, String  pass, String productName, String price) {
         create(user, pass);
         login(user, pass);
         driver.findElement(By.linkText("Products")).click();
@@ -130,7 +130,7 @@ public class TestHelper {
         driver.findElement(By.id("product_title")).sendKeys(productName);
         driver.findElement(By.id("product_description")).sendKeys("This is a test product");
         new Select(driver.findElement(By.id("product_prod_type"))).selectByValue("Books");
-        driver.findElement(By.id("product_price")).sendKeys("10");
+        driver.findElement(By.id("product_price")).sendKeys(price);
         driver.findElement(By.name("commit")).click();
     }
 
