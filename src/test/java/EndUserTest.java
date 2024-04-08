@@ -82,4 +82,26 @@ public class EndUserTest extends TestHelper {
         waitForElementById("order_receipt");
         Assert.assertEquals(1, driver.findElements(By.id("order_receipt")).size());
     }
+
+    @Test
+    public void searchForNotExisting() {
+        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0");
+        driver.get(baseUrl);
+        driver.findElement(By.id("search_input")).clear();
+        driver.findElement(By.id("search_input")).sendKeys("Weird thing that should not exist at all");
+        Assert.assertEquals(0, driver.findElement(By.id("main")).findElements(By.linkText("Weird thing that should not exist")).size());
+        driver.findElement(By.id("search_input")).submit();
+        Assert.assertEquals(0, driver.findElement(By.id("main")).findElements(By.linkText("Weird thing that should not exist")).size());
+    }
+
+    @Test
+    public void searchForExisting() {
+        addNewProduct("randomuser", "randompass", "Weird thing that should not exist", "1.0");
+        driver.get(baseUrl);
+        driver.findElement(By.id("search_input")).clear();
+        driver.findElement(By.id("search_input")).sendKeys("Weird thing that should not exist");
+        Assert.assertEquals(1, driver.findElement(By.id("main")).findElements(By.linkText("Weird thing that should not exist")).size());
+        driver.findElement(By.id("search_input")).submit();
+        Assert.assertEquals(1, driver.findElement(By.id("main")).findElements(By.linkText("Weird thing that should not exist")).size());
+    }
 }

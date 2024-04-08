@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class TestHelper {
 
     static WebDriver driver;
-    final int waitForResposeTime = 4;
+    final int waitForResposeTime = 15;
 	
 	// here write a link to your admin website (e.g. http://my-app.herokuapp.com/admin)
     String baseUrlAdmin = "http://127.0.0.1:3000/admin";
@@ -27,8 +27,8 @@ public class TestHelper {
     public void setUp(){
 
         // if you use Chrome:
-        //System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
-        //driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
+        driver = new ChromeDriver();
 
         // if you use Firefox:
         //System.setProperty("webdriver.gecko.driver", "C:\\Users\\...\\geckodriver.exe");
@@ -93,7 +93,6 @@ public class TestHelper {
         if(isLoggedIn()) logout();
         driver.get(baseUrlAdmin);
         driver.findElement(By.linkText("Register")).click();
-        waitFor(ExpectedConditions.presenceOfElementLocated(By.id("user_name")));
         driver.findElement(By.id("user_name")).sendKeys(username);
         driver.findElement(By.id("user_password")).sendKeys(password);
         driver.findElement(By.id("user_password_confirmation")).sendKeys(password);
@@ -125,6 +124,7 @@ public class TestHelper {
         create(user, pass);
         login(user, pass);
         driver.findElement(By.linkText("Products")).click();
+        waitFor(ExpectedConditions.presenceOfElementLocated(By.linkText("New product")));
         driver.findElement(By.linkText("New product")).click();
         waitForElementById("product_title");
         driver.findElement(By.id("product_title")).sendKeys(productName);
