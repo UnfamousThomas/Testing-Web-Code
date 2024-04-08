@@ -1,4 +1,5 @@
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -44,22 +45,39 @@ public class AdminTest extends TestHelper {
     public void deleteAccount() {
         create(user, pass);
         delete(user, pass);
-        Assert.assertEquals(false, isLoggedIn());
+        Assert.assertFalse(isLoggedIn());
         login(user, pass);
-        Assert.assertEquals(false, isLoggedIn());
+        Assert.assertFalse(isLoggedIn());
     }
 
     @Test
     public void addProduct() {
-        create(user, pass);
-        driver.findElement(By.linkText("New product")).click();
+        addNewProduct(user, pass, "New Test Product");
+        Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
+        driver.findElement(By.id("New Test Product")).findElement(By.linkText("Delete")).click();
+        delete(user, pass);
+    }
+
+    @Test
+    public void editProduct() {
+        addNewProduct(user, pass, "New Test Product");
+        Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
+        driver.findElement(By.id("New Test Product")).findElement(By.linkText("Edit")).click();
         waitForElementById("product_title");
-        driver.findElement(By.id("product_title")).sendKeys("New Test Product");
-        driver.findElement(By.id("product_description")).sendKeys("This is a test product");
-        new Select(driver.findElement(By.id("product_prod_type"))).selectByValue("Books");
-        driver.findElement(By.id("product_price")).sendKeys("10");
+        driver.findElement(By.id("product_title")).clear();
+        driver.findElement(By.id("product_title")).sendKeys("Edited Test Product");
         driver.findElement(By.name("commit")).click();
-        waitFor(ExpectedConditions.presenceOfElementLocated(By.linkText("New Product")));
-        driver.findElement(By.linkText("New Test Product"));
+        Assert.assertEquals("Title: Edited Test Product", driver.findElement(By.id("main")).findElement(By.className("products_column")).findElements(By.cssSelector("p")).get(1).getText().trim());
+        driver.findElement(By.linkText("Products")).click();
+        driver.findElement(By.id("Edited Test Product")).findElement(By.linkText("Delete")).click();
+        delete(user, pass);
+    }
+
+    @Test
+    public void deleteProduct() {
+        addNewProduct(user, pass, "New Test Product");
+        Assert.assertTrue(isElementPresent(By.linkText("New Test Product")));
+        driver.findElement(By.id("New Test Product")).findElement(By.linkText("Delete")).click();
+        delete(user, pass);
     }
 }

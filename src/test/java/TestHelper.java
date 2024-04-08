@@ -1,10 +1,13 @@
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -24,8 +27,8 @@ public class TestHelper {
     public void setUp(){
 
         // if you use Chrome:
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
-        driver = new ChromeDriver();
+        //System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
+        //driver = new ChromeDriver();
 
         // if you use Firefox:
         //System.setProperty("webdriver.gecko.driver", "C:\\Users\\...\\geckodriver.exe");
@@ -116,6 +119,19 @@ public class TestHelper {
         waitFor(ExpectedConditions.presenceOfElementLocated(By.id("notice")));
         WebElement notice = driver.findElement(By.id("notice"));
         Assert.assertEquals("User was successfully deleted.", notice.getText().trim());
+    }
+
+    void addNewProduct(String user, String  pass, String productName) {
+        create(user, pass);
+        login(user, pass);
+        driver.findElement(By.linkText("Products")).click();
+        driver.findElement(By.linkText("New product")).click();
+        waitForElementById("product_title");
+        driver.findElement(By.id("product_title")).sendKeys(productName);
+        driver.findElement(By.id("product_description")).sendKeys("This is a test product");
+        new Select(driver.findElement(By.id("product_prod_type"))).selectByValue("Books");
+        driver.findElement(By.id("product_price")).sendKeys("10");
+        driver.findElement(By.name("commit")).click();
     }
 
     void waitFor(ExpectedCondition<WebElement> expectedConditions) {
