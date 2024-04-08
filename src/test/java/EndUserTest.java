@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 public class EndUserTest extends TestHelper {
 
@@ -45,5 +46,26 @@ public class EndUserTest extends TestHelper {
         addProductToCart("B45593 Sunglasses");
         driver.findElement(By.id("cart")).findElement(By.className("button_to")).findElement(By.cssSelector("input[type=submit]")).click();
         Assert.assertEquals(0, driver.findElements(By.linkText("X")).size());
+    }
+
+    @Test
+    public void searchProductByName() {
+        driver.findElement(By.id("search_input")).clear();
+        driver.findElement(By.id("search_input")).sendKeys("Web Application Testing Book");
+        Assert.assertEquals(1, driver.findElement(By.id("main")).findElements(By.linkText("Web Application Testing Book")).size());
+    }
+
+    @Test
+    public void purchase() {
+        addProductToCart("Web Application Testing Book");
+        driver.findElement(By.id("cart")).findElements(By.cssSelector("form")).get(1).findElement(By.cssSelector("input[type=submit]")).click();
+        waitForElementById("order_name");
+        driver.findElement(By.id("order_name")).sendKeys("Test Name");
+        driver.findElement(By.id("order_address")).sendKeys("Test Address");
+        driver.findElement(By.id("order_email")).sendKeys("Test Email");
+        new Select(driver.findElement(By.id("order_pay_type"))).selectByValue("Check");
+        driver.findElement(By.id("place_order")).findElement(By.cssSelector("input[type=submit]")).click();
+        waitForElementById("order_receipt");
+        Assert.assertEquals(1, driver.findElements(By.id("order_receipt")).size());
     }
 }
