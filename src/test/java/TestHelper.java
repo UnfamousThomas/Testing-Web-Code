@@ -31,8 +31,8 @@ public class TestHelper {
         driver = new ChromeDriver();
 
         // if you use Firefox:
-        //System.setProperty("webdriver.gecko.driver", "C:\\Users\\...\\geckodriver.exe");
-        //driver = new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\madisjaa\\Downloads\\geckodriver.exe");
+        driver = new FirefoxDriver();
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(baseUrl);
