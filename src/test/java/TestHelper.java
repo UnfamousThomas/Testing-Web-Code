@@ -27,8 +27,8 @@ public class TestHelper {
     public void setUp(){
 
         // if you use Chrome:
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
-        driver = new ChromeDriver();
+        //System.setProperty("webdriver.chrome.driver", "C:\\Users\\thomaspa\\Desktop\\Personal\\Testimine\\chromedriver.exe");
+        //driver = new ChromeDriver();
 
         // if you use Firefox:
         System.setProperty("webdriver.gecko.driver", "C:\\Users\\madisjaa\\Downloads\\geckodriver.exe");
